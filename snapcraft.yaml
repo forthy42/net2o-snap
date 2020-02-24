@@ -1,6 +1,6 @@
-name: net2o-forthy # you probably want to 'snapcraft register <name>'
+name: net2o # you probably want to 'snapcraft register <name>'
 base: core18 # the base snap is the execution environment for this snap
-version: '0.7.9-20200220' # just for humans, typically '1.2+git' or '1.3.2'
+version: '0.9.7-20200224' # just for humans, typically '1.2+git' or '1.3.2'
 summary: net2o snap # 79 char long summary
 description: |
   This is the weekly development snapshot of net2o in snap format.
@@ -14,18 +14,24 @@ apps:
   gforth-fast:
     command: bin/gforth-fast
     environment:
-      GFORTHPATH: .:/snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220:/snap/net2o-forthy/current/usr/share/gforth/0.7.9_20200220:/snap/net2o-forthy/current/usr/share/gforth/site-forth:~+
-      GFORTHCCPATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220/amd64/libcc-named
-      GFORTHFONTS: /snap/net2o-forthy/current/usr/share/fonts/
-      LIBGL_DRIVERS_PATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/dri
+      GFORTHPATH: .:/snap/net2o/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200224:/snap/net2o/current/usr/share/gforth/0.7.9_20200224:/snap/net2o/current/usr/share/gforth/site-forth:~+
+      GFORTHCCPATH: /snap/net2o/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200224/amd64/libcc-named
+      GFORTHFONTS: /snap/net2o/current/usr/share/fonts/
+      LIBGL_DRIVERS_PATH: /snap/net2o/current/usr/lib/x86_64-linux-gnu/dri
       GFORTH_GL: glx
+    plugs:
+      - home
+      - network
+      - x11
+      - opengl
+      - unity7
   n2o:
-    command: bin/gforth-fast /snap/net2o-forthy/current/bin/n2o
+    command: bin/gforth-fast /snap/net2o/current/bin/n2o
     environment:
-      GFORTHPATH: .:/snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220:/snap/net2o-forthy/current/usr/share/gforth/0.7.9_20200220:/snap/net2o-forthy/current/share/gforth/0.7.9_20200220/net2o:/snap/net2o-forthy/current/usr/share/gforth/site-forth:~+
-      GFORTHCCPATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220/amd64/libcc-named:/snap/net2o-forthy/current/lib/gforth/0.7.9_20200220/amd64/libcc-named
-      GFORTHFONTS: /snap/net2o-forthy/current/usr/share/fonts/
-      LIBGL_DRIVERS_PATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/dri
+      GFORTHPATH: .:/snap/net2o/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200224:/snap/net2o/current/usr/share/gforth/0.7.9_20200224:/snap/net2o/current/share/gforth/0.7.9_20200224/net2o:/snap/net2o/current/usr/share/gforth/site-forth:~+
+      GFORTHCCPATH: /snap/net2o/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200224/amd64/libcc-named:/snap/net2o/current/lib/gforth/0.7.9_20200224/amd64/libcc-named
+      GFORTHFONTS: /snap/net2o/current/usr/share/fonts/
+      LIBGL_DRIVERS_PATH: /snap/net2o/current/usr/lib/x86_64-linux-gnu/dri
       GFORTH_GL: glx
     plugs:
       - home
@@ -56,6 +62,8 @@ parts:
   net2o:
     source: https://git.net2o.de/bernd/net2o.git
     plugin: autotools
+    configflags:
+      - --disable-gps
     after:
       - prepare
       - desktop-glib-only
@@ -92,3 +100,4 @@ parts:
       - libsoil2
       - freetype-gl
       - gforth-minos2
+      - libgps-dev
