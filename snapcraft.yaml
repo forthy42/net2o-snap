@@ -1,25 +1,31 @@
-name: gforth-forthy # you probably want to 'snapcraft register <name>'
+name: net2o-forthy # you probably want to 'snapcraft register <name>'
 base: core18 # the base snap is the execution environment for this snap
 version: '0.7.9-20200220' # just for humans, typically '1.2+git' or '1.3.2'
-summary: gforth snap # 79 char long summary
+summary: net2o snap # 79 char long summary
 description: |
-  This is the weekly development snapshot of Gforth in snap format. Building
-  for snap has made considerable progress, all SWIG-generated libraries load,
-  OpenGL via GLX works.
+  This is the weekly development snapshot of net2o in snap format.
 
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 type: app
-license: GPL-3.0+ # SPDX 2.0 identifiers
+license: AGPL-3.0+ # SPDX 2.0 identifiers
 
 apps:
-  n2o:
-    command: bin/n2o
+  gforth-fast:
+    command: bin/gforth-fast
     environment:
-      GFORTHPATH: .:/snap/gforth-forthy/current/lib/gforth/0.7.9_20200220:/snap/gforth-forthy/current/share/gforth/0.7.9_20200220:/snap/gforth-forthy/current/share/gforth/site-forth:~+
-      GFORTHCCPATH: /snap/gforth-forthy/current/lib/gforth/0.7.9_20200220/amd64/libcc-named
-      GFORTHFONTS: /snap/gforth-forthy/current/usr/share/fonts/
-      LIBGL_DRIVERS_PATH: /snap/gforth-forthy/current/usr/lib/x86_64-linux-gnu/dri
+      GFORTHPATH: .:/snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220:/snap/net2o-forthy/current/usr/share/gforth/0.7.9_20200220:/snap/net2o-forthy/current/usr/share/gforth/site-forth:~+
+      GFORTHCCPATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220/amd64/libcc-named
+      GFORTHFONTS: /snap/net2o-forthy/current/usr/share/fonts/
+      LIBGL_DRIVERS_PATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/dri
+      GFORTH_GL: glx
+  n2o:
+    command: bin/gforth-fast /snap/net2o-forthy/current/bin/n2o
+    environment:
+      GFORTHPATH: .:/snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220:/snap/net2o-forthy/current/usr/share/gforth/0.7.9_20200220:/snap/net2o-forthy/current/share/gforth/0.7.9_20200220/net2o:/snap/net2o-forthy/current/usr/share/gforth/site-forth:~+
+      GFORTHCCPATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/gforth/0.7.9_20200220/amd64/libcc-named:/snap/net2o-forthy/current/lib/gforth/0.7.9_20200220/amd64/libcc-named
+      GFORTHFONTS: /snap/net2o-forthy/current/usr/share/fonts/
+      LIBGL_DRIVERS_PATH: /snap/net2o-forthy/current/usr/lib/x86_64-linux-gnu/dri
       GFORTH_GL: glx
     plugs:
       - home
@@ -47,38 +53,17 @@ parts:
       - libglib2.0-dev
     stage-packages:
       - libglib2.0-bin
-  gforth:
-    after:
-       - prepare
-       - desktop-glib-only
-#    source: https://www.complang.tuwien.ac.at/forth/gforth/Snapshots/0.7.9_20200220/gforth-0.7.9_20200220.tar.xz
-    source: https://net2o.de/gforth/gforth-0.7.9_20200220_14.tar.xz
+  net2o:
+    source: https://git.net2o.de/bernd/net2o.git
     plugin: autotools
-    configflags:
-      - --with-install=swig
-      - --disable-lib
+    after:
+      - prepare
+      - desktop-glib-only
     build-packages:
       - libtool-bin
-      - libltdl-dev
-      - libx11-dev
-      - libx11-xcb-dev
-      - libxrandr-dev
-      - libgles2-mesa-dev
-      - libgl1-mesa-dev
-      - libwayland-dev
-      - libvulkan-dev
-      - libpng-dev
-      - libfreetype6-dev
+      - libgps-dev
       - libffi-dev
-      - texinfo
-      - git
-      - g++
-      - yodl
-      - bison
-      - libpcre3-dev
-      - libboost-dev
-      - libsoil2
-      - freetype-gl
+      - gforth-minos2
     stage-packages:
       - libltdl7
       - libfreetype6
@@ -99,16 +84,11 @@ parts:
       - libxext6
       - libxrandr2
       - libxrender1
-      - libsoil2
-      - freetype-gl
       - fonts-noto
       - fonts-liberation
       - fonts-arphic-gkai00mp
       - fonts-noto-emoji
       - fonts-awesome
-  net2o:
-    source: https://git.net2o.de/bernd/net2o.git
-    plugin: autotool
-    after:
-      - gforth
-
+      - libsoil2
+      - freetype-gl
+      - gforth-minos2
