@@ -1,64 +1,64 @@
-# gforth-snap
+# net2o-snap
 
-Gforth as a Snap package.
+net2o as a Snap package.
 
 ## From snapstore
 
 ```
-$ snap search gforth
-Name           Version         Publisher  Notes  Summary
-gforth-forthy  0.7.9-20200220  forthy     -      Gforth development snap
-gforth-mtrute  0.7.9-20190627  mtrute     -      gforth snap
+$ snap search net2o
+Name   Version         Publisher  Notes  Summary
+net2o  0.9.7-20200224  forthy     -      net2o snap
 
-$ snap info gforth-forthy
-name:      gforth-forthy
-summary:   gforth snap
-publisher: –
-store-url: https://snapcraft.io/gforth-forthy
-license:   GPL-3.0+
+$ snap info net2o
+name:      net2o
+summary:   net2o snap
+publisher: Bernd Paysan (forthy)
+store-url: https://snapcraft.io/net2o
+contact:   bernd@net2o.de
+license:   AGPL-3.0+
 description: |
-  This is the weekly development snapshot of Gforth in snap format. Building
-  for snap has made considerable progress, all SWIG-generated libraries load,
-  OpenGL via GLX works.
-commands:
-  - gforth-forthy.gforth
-  - gforth-forthy.gforth-ditc
-  - gforth-forthy.gforth-fast
-  - gforth-forthy.gforth-itc
-refresh-date: today at 22:46 CET
+  This is the weekly development snapshot of net2o in snap format.
+snap-id: YDwsyKosAdepTnlQstILtoDq3LPpSVVV
 channels:
-  stable:    0.7.9-20200220 2020-02-23   (3) 56MB -
+  stable:    0.9.7-20200224 2020-02-25 (2) 72MB -
   candidate: ↑
   beta:      ↑
   edge:      ↑
 ```
 
-## Run gforth
+## Run net2o
 
-  Install the snap with sudo
+Install the snap with sudo
 
 ```
-$ sudo snap install gforth-forthy
-gforth-forthy 0.7.9-20200220 from Bernd Paysan (forthy) installed
+$ sudo snap install net2o
+net2o 0.9.7-20200224 from Bernd Paysan (forthy) installed
 
 $ snap list
 Name             Version         Rev   Tracking  Publisher   Notes
 core18           20200124        1668  stable    canonical✓  base
-gforth-forthy    0.7.9-20200220  4     stable    forthy      -
+net2o            0.9.7-20200224  2     stable    forthy      -
+```
+
+net2o needs the netlink connector, which is not auto-connecting, i.e. you need
+to do that manually.
+
+```
+$ sudo snap connect net2o:netlink-connector :netlink-connector
+$ snap connections
+Interface          Plug                     Slot                Notes
+home               net2o:home               :home               -
+netlink-connector  net2o:netlink-connector  :netlink-connector  manual
+network            net2o:network            :network            -
+opengl             net2o:opengl             :opengl             -
+unity7             net2o:unity7             :unity7             -
+x11                net2o:x11                :x11                -
 ```
 
 Tested with Ubuntu 18.04 (bionic).
 
 ```
-$ /snap/bin/gforth-forthy.gforth 
-Gforth 0.7.9_20200220
-Authors: Anton Ertl, Bernd Paysan, Jens Wilke et al., for more type `authors'
-Copyright © 2019 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
-Gforth comes with ABSOLUTELY NO WARRANTY; for details type `license'
-Type `help' for basic help
-bye 
-$
+$ /snap/bin/net2o.n2o gui 
 ```
 
 This snap has the right to access the network and the files within HOME.
@@ -66,7 +66,7 @@ This snap has the right to access the network and the files within HOME.
 ## Building
 
 you'll have to be me for that ;). If you want to build you own version,
-make sure to replace the string mtrute with your name.
+make sure to replace the string forthy with your name.
 
 ```
 $ snapcraft status gforth-forthy
