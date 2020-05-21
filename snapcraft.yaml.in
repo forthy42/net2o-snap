@@ -36,6 +36,8 @@ apps:
       - opengl
       - unity7
       - locale-control
+      - audio-playback
+      - audio-record
   gforth:
     command: bin/gforth
     environment:
@@ -53,6 +55,8 @@ apps:
       - opengl
       - unity7
       - locale-control
+      - audio-playback
+      - audio-record
   n2o:
     command: bin/gforth-fast /snap/net2o/current/bin/n2o
     environment:
@@ -70,6 +74,8 @@ apps:
       - opengl
       - unity7
       - locale-control
+      - audio-playback
+      - audio-record
 
 parts:
   prepare:
@@ -135,4 +141,8 @@ parts:
       - freetype-gl
       - gforth-minos2
       - libgps-dev
+      - libpulse0
+      - libopus0
+      - libavcodec57
+      - libavutil55
 EOF
